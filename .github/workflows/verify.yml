@@ -1,0 +1,19 @@
+name: Verify
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Official V 0.5.2
+        run: |
+          curl -fL https://github.com/vlang/v/releases/download/0.5.2/v_linux.zip -o /tmp/v.zip
+          echo "86caf9e70c3342d48ef19eb4f6c47b709f18c90ae86255520d5c29df6b482e23  /tmp/v.zip" | sha256sum -c -
+          unzip -q /tmp/v.zip -d /tmp/vsdk
+          echo /tmp/vsdk/v >> "$GITHUB_PATH"
+      - run: v test .
+      - run: v -path "@vlib|.." -o /tmp/feedpages cmd/feedpages
+      - run: /tmp/feedpages examples/consistent.json > /tmp/report.json
+      - run: test "$(/tmp/feedpages examples/broken.json >/tmp/broken.json; echo $?)" = 1

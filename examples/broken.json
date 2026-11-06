@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "pages": [
+    {
+      "request_cursor": "",
+      "next_cursor": "cursor-B",
+      "record_ids": [
+        "A1",
+        "A2"
+      ],
+      "total": 3,
+      "revision": "snapshot-7"
+    },
+    {
+      "request_cursor": "cursor-B",
+      "next_cursor": "missing-C",
+      "record_ids": [
+        "A2"
+      ],
+      "total": 3,
+      "revision": "snapshot-7"
+    }
+  ]
+}

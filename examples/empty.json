@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "pages": [
+    {
+      "request_cursor": "",
+      "next_cursor": "",
+      "record_ids": [],
+      "total": 0,
+      "revision": "snapshot-empty"
+    }
+  ]
+}
