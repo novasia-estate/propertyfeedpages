@@ -4,16 +4,12 @@ A dependency-free V library and offline CLI for auditing a **single paginated pr
 
 Find missing pages, cycles, competing responses for one cursor, unreachable pages, duplicate IDs, total mismatches and changing revisions. No network requests, fuzzy deduplication or two-snapshot comparison.
 
-## Install
+## Library use
 
-```sh
-v install podkopov-hub.propertyfeedpages
-```
-
-Registry publisher: `podkopov-hub`. Source and maintenance: **novasia-estate**. V normalizes the publisher's hyphen in imports:
+Source and maintenance: **novasia-estate**. VPM registration is pending the registry's organization-membership check. No working VPM install command is claimed yet. For local use, keep the checkout named `propertyfeedpages` and add its parent directory to V's module path:
 
 ```v
-import podkopov_hub.propertyfeedpages
+import propertyfeedpages
 
 fn main() {
     capture := propertyfeedpages.Capture{
