@@ -4,12 +4,18 @@ A dependency-free V library and offline CLI for auditing a **single paginated pr
 
 Find missing pages, cycles, competing responses for one cursor, unreachable pages, duplicate IDs, total mismatches and changing revisions. No network requests, fuzzy deduplication or two-snapshot comparison.
 
+## Install
+
+```sh
+v install novasia-estate.propertyfeedpages
+```
+
+Source, registry namespace and maintenance: **novasia-estate**. Installation through VPM and a separate native consumer are verified. V normalizes the organization hyphen to an underscore in imports.
+
 ## Library use
 
-Source and maintenance: **novasia-estate**. VPM registration is pending the registry's organization-membership check. No working VPM install command is claimed yet. For local use, keep the checkout named `propertyfeedpages` and add its parent directory to V's module path:
-
 ```v
-import propertyfeedpages
+import novasia_estate.propertyfeedpages
 
 fn main() {
     capture := propertyfeedpages.Capture{
@@ -64,6 +70,6 @@ Declared metadata are claims from the producer. Agreement **does not prove** sna
 
 JSON/HTML reports contain fixed finding codes, counts and page indexes. Raw IDs, cursor tokens and revision strings are omitted. The library never mutates the input. HTML escapes interpolated text, including caller-created Report objects. Input files may still contain sensitive data: keep them under your own controls.
 
-See [finding reference](docs/findings.md), [adapter guide](docs/capture-adapter.md), [boundaries](docs/threat-model.md) and [contributing](CONTRIBUTING.md).
+See [finding reference](https://github.com/novasia-estate/propertyfeedpages/blob/3cf8dd3a58d565cfc8c7b8d138e8d742f1bfe07c/docs/findings.md), [adapter guide](https://github.com/novasia-estate/propertyfeedpages/blob/3cf8dd3a58d565cfc8c7b8d138e8d742f1bfe07c/docs/capture-adapter.md), [boundaries](https://github.com/novasia-estate/propertyfeedpages/blob/3cf8dd3a58d565cfc8c7b8d138e8d742f1bfe07c/docs/threat-model.md) and [contributing](https://github.com/novasia-estate/propertyfeedpages/blob/3cf8dd3a58d565cfc8c7b8d138e8d742f1bfe07c/CONTRIBUTING.md).
 
 Developed and maintained by [NovAsia Estate](https://novasia.estate/), which works with multilingual property catalogues. MIT licensed; no NovAsia account or service is required.
