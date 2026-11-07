@@ -46,6 +46,21 @@ Exit codes: **0** consistent supplied capture, **1** review required or unavaila
 
 ## Input contract
 
+### Independent batch captures in 1.1
+
+Audit up to 100 independent captures in one local run. A malformed capture becomes an `invalid_capture` item without hiding valid neighbors:
+
+```sh
+./feedpages examples/batch.json --batch
+./feedpages examples/batch.json --batch --html > batch-review.html
+```
+
+The batch envelope has exactly `schema_version: 1` and `captures`, an array of ordinary capture objects. `audit_json_batch(text)` returns a batch report; typed callers can use `audit_batch([]Capture)`. Export with `batch_report_json` or `batch_report_html`. The original single-capture API, JSON envelope and CLI invocation are unchanged.
+
+Every result has a one-based `capture_index`, a status, an optional ordinary report, and a fixed error code for invalid captures. Batch status is `consistent_batch` only when every capture is consistent; otherwise it is `needs_review`. Counts distinguish consistent, review and invalid captures. `sum_capture_unique_records` is the **sum of independent per-capture counts**, not unique properties across captures. IDs reused in separate captures are not cross-capture duplicates.
+
+Limits: 16 MiB for the whole JSON envelope, 1–100 captures, at most 20,000 supplied pages and 200,000 record occurrences across decoded captures, plus each original per-capture limit. Envelope/resource-budget errors stop the whole batch with exit 2. Capture-specific errors are isolated, produce exit 1 and retain other results. Reports disclose only capture/page indexes, counts and fixed finding codes; no input IDs, cursor tokens or source filenames are added.
+
 The JSON envelope has exactly `schema_version: 1` and `pages`. Every page has exactly these five fields:
 
 ```json

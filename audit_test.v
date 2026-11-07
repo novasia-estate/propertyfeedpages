@@ -4,8 +4,20 @@ import json
 
 fn base() Capture {
 	return Capture{
-		pages: [Page{ next_cursor: 'B', record_ids: ['a', 'b'], total: 3, revision: 'r' },
-			Page{ request_cursor: 'B', record_ids: ['c'], total: 3, revision: 'r' }]
+		pages: [
+			Page{
+				next_cursor: 'B'
+				record_ids:  ['a', 'b']
+				total:       3
+				revision:    'r'
+			},
+			Page{
+				request_cursor: 'B'
+				record_ids:     ['c']
+				total:          3
+				revision:       'r'
+			},
+		]
 	}
 }
 
@@ -47,40 +59,45 @@ fn test_library_rejects_negative_total() {
 	if _ := audit(Capture{
 		pages: [Page{ total: -2 }]
 	})
-	{ assert false
-	 }
+	{
+		assert false
+	}
 }
 
 fn test_library_rejects_huge_total() {
 	if _ := audit(Capture{
 		pages: [Page{ total: 100001 }]
 	})
-	{ assert false
-	 }
+	{
+		assert false
+	}
 }
 
 fn test_library_rejects_blank_id() {
 	if _ := audit(Capture{
 		pages: [Page{ record_ids: ['  '] }]
 	})
-	{ assert false
-	 }
+	{
+		assert false
+	}
 }
 
 fn test_library_rejects_long_id() {
 	if _ := audit(Capture{
 		pages: [Page{ record_ids: ['x'.repeat(1025)] }]
 	})
-	{ assert false
-	 }
+	{
+		assert false
+	}
 }
 
 fn test_library_rejects_long_cursor() {
 	if _ := audit(Capture{
 		pages: [Page{ next_cursor: 'x'.repeat(4097) }]
 	})
-	{ assert false
-	 }
+	{
+		assert false
+	}
 }
 
 fn test_missing_start() {
@@ -140,8 +157,10 @@ fn test_duplicate_in_page() {
 
 fn test_duplicate_across_pages() {
 	r := audit(Capture{
-		pages: [Page{ next_cursor: 'B', record_ids: ['a'] }, Page{ request_cursor: 'B', record_ids: [
-			'a'] }]
+		pages: [Page{ next_cursor: 'B', record_ids: ['a'] }, Page{
+			request_cursor: 'B'
+			record_ids:     ['a']
+		}]
 	})!
 	assert has(r, 'duplicate_record_id')
 	assert r.findings.any(it.related_page == 1)
